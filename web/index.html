@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Panel de Gastos 2026</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="cabecera">
+    <div>
+      <h1>💰 Panel de Gastos 2026</h1>
+      <p id="excel-info" class="excel-info">Cargando datos…</p>
+    </div>
+    <div class="acciones">
+      <span id="auto-status" class="auto-status">🟢 Auto cada 10s</span>
+      <button id="btn-actualizar" class="btn" type="button">🔄 Actualizar</button>
+      <button id="btn-nuevo" class="btn btn-primario" type="button">＋ Añadir gasto</button>
+    </div>
+  </header>
+
+  <main>
+    <div id="aviso" class="aviso oculto"></div>
+
+    <!-- Resumen anual -->
+    <section class="tarjetas" id="resumen-anual"></section>
+
+    <!-- Comparativa -->
+    <section class="panel">
+      <h2>📊 Comparativa entre meses</h2>
+      <div id="chart-comparativa" class="chart"></div>
+    </section>
+
+    <!-- Ingresos y gastos por mes -->
+    <section class="panel">
+      <h2>💰 Ingresos y gastos del año · por mes</h2>
+      <div class="tabla-wrap">
+        <table id="tabla-mensual">
+          <thead>
+            <tr>
+              <th>Mes</th>
+              <th class="num">Ingresos</th>
+              <th class="num">Gastos</th>
+              <th class="num">Diferencia</th>
+              <th class="num">Otro gasto</th>
+              <th class="num">Saldo</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+          <tfoot></tfoot>
+        </table>
+      </div>
+    </section>
+
+    <!-- Tarjetas por mes -->
+    <section class="panel">
+      <h2>🗂️ Resumen mensual</h2>
+      <p class="nota">El «ahorro final» sale de la hoja mensual; tras añadir un gasto se recalcula al abrir el Excel en Excel/OneDrive.</p>
+      <div id="grid-meses" class="grid-meses"></div>
+    </section>
+
+    <!-- Listado detallado -->
+    <section class="panel">
+      <h2>📋 Listado detallado</h2>
+      <div class="filtros">
+        <input id="buscar" type="text" placeholder="🔍 Buscar concepto…">
+        <select id="filtro-categoria">
+          <option value="">Todas las categorías</option>
+        </select>
+        <select id="filtro-mes">
+          <option value="">Todos los meses</option>
+        </select>
+      </div>
+      <div id="resumen-filtrado" class="resumen-filtrado"></div>
+      <div class="tabla-wrap">
+        <table id="tabla-gastos">
+          <thead>
+            <tr>
+              <th>Mes</th>
+              <th>Día</th>
+              <th>Concepto</th>
+              <th>Categoría</th>
+              <th class="num">Importe</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+          <tfoot id="tfoot-gastos"></tfoot>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal añadir gasto -->
+  <div id="modal" class="modal oculto">
+    <div class="modal-caja">
+      <button id="btn-cerrar-modal" class="modal-cerrar" type="button" aria-label="Cerrar">×</button>
+      <h2>＋ Añadir gasto</h2>
+      <form id="form-gasto" autocomplete="off">
+        <label>Fecha
+          <input type="date" id="fecha" required>
+        </label>
+        <label>Concepto
+          <input type="text" id="concepto" required placeholder="MERCADONA">
+        </label>
+        <label>Importe (€)
+          <input type="number" id="importe" step="0.01" min="0.01" required placeholder="25.00">
+        </label>
+        <label>Categoría
+          <input type="text" id="categoria" list="lista-categorias" placeholder="COMIDA">
+        </label>
+        <datalist id="lista-categorias"></datalist>
+        <div id="form-error" class="form-error oculto"></div>
+        <div class="modal-botones">
+          <button type="button" id="btn-cancelar" class="btn">Cancelar</button>
+          <button type="submit" class="btn btn-primario">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast oculto"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
